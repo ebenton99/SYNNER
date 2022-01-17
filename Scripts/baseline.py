@@ -44,7 +44,6 @@ def cont_dist(x, isInt, numVals):
 
 def main():
     fName = "../Datasets/UCI_Credit_Card.csv"
-    numVals = 1000
     
     #Get data and headers from data file
     data = np.loadtxt(open(fName, "rb"), delimiter = ",", skiprows = 1)
@@ -55,6 +54,7 @@ def main():
     
     #List of types of each feature in dataset (0 = discrete, 1 = continuous)
     types = [1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0] #Any way to automate this?
+    numVals = len(data)
     
     synth_data = []
     for i in range(0, len(types)):
@@ -69,7 +69,7 @@ def main():
     #Transpose synthetic data so that dimensions are correct
     synth_data = np.transpose(synth_data)
     
-    np.savetxt("./baseline.csv", synth_data, delimiter=",", header=headers)
+    np.savetxt("../Datasets/baseline.csv", synth_data, delimiter=",", header=headers)
 
 if __name__ == "__main__":
     main()
