@@ -43,7 +43,7 @@ def cont_dist(x, isInt, numVals):
     return synth_x
 
 def main():
-    fName = "../Datasets/UCI_Credit_Card.csv"
+    fName = "../Datasets/credit_card/train.csv"
     
     #Get data and headers from data file
     data = np.loadtxt(open(fName, "rb"), delimiter = ",", skiprows = 1)
@@ -69,7 +69,7 @@ def main():
     #Transpose synthetic data so that dimensions are correct
     synth_data = np.transpose(synth_data)
     
-    np.savetxt("../Datasets/baseline.csv", synth_data, delimiter=",", header=headers)
+    np.savetxt("../Datasets/credit_card/baseline.csv", synth_data, delimiter=",", header=headers)
 
 if __name__ == "__main__":
     main()
