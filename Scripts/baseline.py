@@ -43,7 +43,8 @@ def cont_dist(x, isInt, numVals):
     return synth_x
 
 def main():
-    fName = "../Datasets/credit_card/train.csv"
+    folder = "../Datasets/kaggle_banking_dataset"
+    fName = folder + "/train.csv"
     
     #Get data and headers from data file
     data = np.loadtxt(open(fName, "rb"), delimiter = ",", skiprows = 1)
@@ -53,15 +54,18 @@ def main():
         headers = ','.join(list(csvDict.keys()))
     
     #List of types of each feature in dataset (0 = discrete, 1 = continuous)
-    types = [1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0] #Any way to automate this?
+    #CC_default_types = [1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0] #Any way to automate this?
+    
+    banking_target_types = [1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0]
+    banking_target_isInt = [1, -1, -1, -1, -1, 1, -1, -1, -1, 1, -1, 1, -1, 1, 1, -1, -1]
     numVals = len(data)
     
     synth_data = []
-    for i in range(0, len(types)):
-        if types[i] == 0:
+    for i in range(0, len(banking_target_types)):
+        if banking_target_types[i] == 0:
             synth_data.append(disc_dist(data[:,i], numVals))
         else:
-            if isinstance(data[0][i], int):
+            if banking_target_isInt[i] == 1:
                 synth_data.append(cont_dist(data[:,i], True, numVals))
             else:
                 synth_data.append(cont_dist(data[:,i], False, numVals))
@@ -69,7 +73,7 @@ def main():
     #Transpose synthetic data so that dimensions are correct
     synth_data = np.transpose(synth_data)
     
-    np.savetxt("../Datasets/credit_card/baseline.csv", synth_data, delimiter=",", header=headers)
+    np.savetxt((folder + "/baseline.csv"), synth_data, delimiter=",", header=headers)
 
 if __name__ == "__main__":
     main()
